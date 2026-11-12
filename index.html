@@ -6,12 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>柏德序日</title>
   <meta name="description" content="柏德序日" />
-
-  <!--縮圖網址-->
-  <meta itemprop="image" content="./image/preview.jpg">
-  <meta property="og:image" content="./image/preview.jpg">
-  <link rel="icon" type="image/png" href="image/favicon.ico" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -27,6 +21,16 @@
   <main>
     <!-- 首頁 -->
     <section id="hero" class="hero">
+      <!-- 雲朵漂動：純 CSS 動畫。要調整數量／位置／快慢，改下面每朵雲的 style 即可
+           --t 離頂端的高度　--w 雲的寬度　--d 飄過畫面一趟的秒數（越大越慢）
+           --dl 起始延遲（負數＝一進頁面就已經在畫面中）　--o 透明度
+           要整個拿掉：刪除這個 div，以及 styles.css 最後面「首頁雲朵漂動」那一段 -->
+      <div class="hero-clouds" aria-hidden="true">
+        <i class="cloud cloud--a" style="--t:8%;  --w:460px; --d:140s; --dl:-30s;  --o:.85; --f:1"></i>
+        <i class="cloud cloud--b" style="--t:22%; --w:520px; --d:110s; --dl:-85s;  --o:1;   --f:1"></i>
+        <i class="cloud cloud--a" style="--t:34%; --w:340px; --d:170s; --dl:-120s; --o:.7;  --f:-1"></i>
+        <i class="cloud cloud--b" style="--t:3%;  --w:380px; --d:125s; --dl:-5s;   --o:.9;  --f:-1"></i>
+      </div>
       <div class="container hero__inner">
         <div class="hero__copy">
           <div class="brand-mark">柏德序日</div>
@@ -246,7 +250,8 @@
     </section>
 
 
-    <section class="section park" style="--bg:url('assets/bg05.jpg')">
+    <section class="section park"
+      style="--bg:url('assets/bg05.jpg')">
       <div class="park-overlay"></div>
       <div class="park-video" aria-label="環境影片播放區">
         <div class="park-video__motion">

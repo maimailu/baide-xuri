@@ -994,6 +994,33 @@ p{
 }
 
 
+/* ===== 首頁雲朵漂動 =====
+   雲在背景照片之上、文字之下，只用 transform 做動畫（順暢省效能）。
+   從左飄到右（跟照片裡頭髮被風吹的方向一致）。要拿掉：刪 index.html 的 .hero-clouds 與這整段 */
+.hero-clouds{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.hero__inner{position:relative;z-index:2}
+.cloud{
+  position:absolute;top:var(--t);left:0;
+  width:var(--w);
+  opacity:var(--o);
+  background:center/100% 100% no-repeat;
+  will-change:transform;
+  animation:cloud-drift var(--d) linear var(--dl) infinite;
+}
+/* 兩種雲的形狀都是從首頁照片裡的雲取出來的，所以看起來跟背景的雲同一個質感 */
+.cloud--a{aspect-ratio:290/130;background-image:url("assets/cloud-a.png")}
+.cloud--b{aspect-ratio:280/155;background-image:url("assets/cloud-b.png")}
+@keyframes cloud-drift{
+  from{transform:translate3d(-60%,0,0) scaleX(var(--f,1))}
+  to{transform:translate3d(calc(100vw + 10%),0,0) scaleX(var(--f,1))}
+}
+@media (max-width:700px){
+  .cloud{width:calc(var(--w)*.6)}
+}
+@media (prefers-reduced-motion:reduce){
+  .cloud{animation:none;left:calc(var(--t)*6)}
+}
+
 /* ===== 測試：拿掉各區塊的背景遮罩，直接顯示 bg01~bg12 原圖 =====
    要還原：刪掉從這一行到檔案結尾的整段即可
    （40 米園道 .park-overlay 已還原成原始設定：105deg 黑色 60% → 透明，不在下面名單內）===== */
