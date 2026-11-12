@@ -1249,8 +1249,10 @@ document.addEventListener(
         // Google Apps Script
         // 用來將表單資料寫入 Google Sheets
         // =================================================
-        const googleScriptUrl =
-          "https://script.google.com/macros/s/AKfycbx0yrBy5xZ_z-ZR_JbA_sHHHcs5ZvK8bgROYiJ0Vo6KJkUsDKHulv2FJPBOa5rgGyJgYw/exec";
+        // 【貼網址的地方】柏德序日自己的 Apps Script 部署網址（以 /exec 結尾）貼在引號中間。
+        // 部署步驟見 google-sheet-baide/Code.gs 最上面的說明。
+        // 留空 = 只寄信、不寫入試算表（避免寫到別的案子的試算表）
+        const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwRWGJg9_3WzfzNWaY_zk83n_4qhKQqWK8mJ5BoIpLw9UrAikk5j28RM3Jmxn0v8fMv/exec";
 
 
 
@@ -1318,7 +1320,9 @@ document.addEventListener(
               // =========================
               // Google Sheets
               // =========================
-              fetch(
+              !googleScriptUrl
+                ? Promise.resolve()
+                : fetch(
                 googleScriptUrl,
                 {
 
