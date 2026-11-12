@@ -1032,3 +1032,10 @@ p{
 .reserve-overlay {
   background: transparent !important;
 }
+
+/* 手機／平板：「簡約有型」區塊文字壓在大樓照片上看不清楚，這裡改成接近純色的淺底（下方本來就另有一張外觀圖）。
+   寬度 > 1100px 的電腦版不受影響，仍直接顯示 bg09 原圖 */
+@media (max-width:1100px){
+  .architecture-wash{background:#f4f8fb !important;}
+  .architecture{min-height:0 !important;} /* 原本最小高度 1080px，內容不到時會在圖片下方留一大片空白 */
+}
