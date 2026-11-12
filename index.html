@@ -498,8 +498,9 @@
           </div>
 
           <div class="privacy-consent">
+            <!-- 不用 required：由 app.js 檢查並顯示提示，瀏覽器原生提示在勾選框被擋住時不會出現 -->
             <input type="checkbox" id="privacyConsent" name="privacyConsent" value="yes"
-              data-validation-required-message="請確認個資事項" required>
+              data-validation-required-message="請確認個資事項" aria-required="true">
             <label for="privacyConsent">本人已悉知</label>
             <button class="privacy-link" type="button" data-open-privacy>個人資料保護政策暨隱私權聲明</button>
           </div>

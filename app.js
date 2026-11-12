@@ -991,6 +991,15 @@ document.addEventListener(
         // 有修改就清除自訂錯誤
         this.setCustomValidity("");
 
+        // 勾選後，清掉紅框與「請先勾選」的提示
+        if (this.checked) {
+          this.closest(".privacy-consent")
+            ?.classList.remove("is-error");
+          if (formStatus?.classList.contains("is-error")) {
+            showMessage("");
+          }
+        }
+
       }
     );
 
@@ -1133,6 +1142,43 @@ document.addEventListener(
 
         // 清除原本訊息
         showMessage("");
+        privacyConsent?.closest(".privacy-consent")
+          ?.classList.remove("is-error");
+
+        // =================================================
+        // 沒勾「本人已悉知」：明確提示（不能只靠瀏覽器原生提示，
+        // 勾選框看不到或被擋住時，原生提示不會出現，使用者會以為按鈕壞了）
+        // 姓名、電話等其他必填還沒填時，先讓下面的原生驗證處理
+        // =================================================
+        if (
+          privacyConsent &&
+          !privacyConsent.checked &&
+          !contactForm.querySelector(
+            ":invalid:not(#privacyConsent)"
+          )
+        ) {
+
+          privacyConsent
+            .closest(".privacy-consent")
+            ?.classList.add("is-error");
+
+          showMessage(
+            "請先勾選「本人已悉知」個人資料保護政策暨隱私權聲明，才能送出預約。",
+            true
+          );
+
+          privacyConsent.scrollIntoView({
+            block: "center",
+            behavior: "smooth"
+          });
+
+          privacyConsent.focus({
+            preventScroll: true
+          });
+
+          return;
+
+        }
 
 
 
@@ -1249,8 +1295,10 @@ document.addEventListener(
         // Google Apps Script
         // 用來將表單資料寫入 Google Sheets
         // =================================================
-        const googleScriptUrl =
-          "https://script.google.com/macros/s/AKfycbx0yrBy5xZ_z-ZR_JbA_sHHHcs5ZvK8bgROYiJ0Vo6KJkUsDKHulv2FJPBOa5rgGyJgYw/exec";
+        // 【貼網址的地方】柏德序日自己的 Apps Script 部署網址（以 /exec 結尾）貼在引號中間。
+        // 部署步驟見 google-sheet-baide/Code.gs 最上面的說明。
+        // 留空 = 只寄信、不寫入試算表（避免寫到別的案子的試算表）
+        const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwRWGJg9_3WzfzNWaY_zk83n_4qhKQqWK8mJ5BoIpLw9UrAikk5j28RM3Jmxn0v8fMv/exec";
 
 
 
@@ -1318,7 +1366,9 @@ document.addEventListener(
               // =========================
               // Google Sheets
               // =========================
-              fetch(
+              !googleScriptUrl
+                ? Promise.resolve()
+                : fetch(
                 googleScriptUrl,
                 {
 
