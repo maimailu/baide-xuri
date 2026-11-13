@@ -577,6 +577,23 @@ p{
 .privacy-consent{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:6px 0 22px;font-size:14px;color:var(--muted)}
 .privacy-consent input{width:auto;accent-color:#527f94}
 .privacy-consent label{cursor:pointer}
+/* 勾選框：自己畫一個清楚看得到的框（原生的太小、顏色淡，部分瀏覽器甚至看不到） */
+.privacy-consent input[type="checkbox"]{
+  -webkit-appearance:none;appearance:none;flex:none;
+  width:22px;height:22px;margin:0;padding:0;
+  border:2px solid #527f94;border-radius:4px;background:#fff;
+  display:inline-grid;place-content:center;cursor:pointer;
+}
+.privacy-consent input[type="checkbox"]::before{
+  content:"";width:12px;height:12px;background:#527f94;
+  clip-path:polygon(14% 44%,0 65%,50% 100%,100% 16%,80% 0%,43% 62%);
+  transform:scale(0);transition:transform .12s ease;
+}
+.privacy-consent input[type="checkbox"]:checked::before{transform:scale(1)}
+.privacy-consent input[type="checkbox"]:focus-visible{outline:3px solid rgba(108,159,181,.45);outline-offset:2px}
+/* 沒勾就按送出：框與文字變紅 */
+.privacy-consent.is-error input[type="checkbox"]{border-color:#a9473f;box-shadow:0 0 0 3px rgba(169,71,63,.18)}
+.privacy-consent.is-error label{color:#a9473f}
 .privacy-link{border:0!important;background:transparent!important;color:#527f94!important;padding:0!important;font:inherit!important;text-decoration:underline;cursor:pointer}
 .contact-form #submitBtn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-width:180px}
 .contact-form #submitBtn.is-sending{opacity:.58;cursor:not-allowed}
@@ -1021,6 +1038,61 @@ p{
   .cloud{animation:none;left:calc(var(--t)*6)}
 }
 
+
+/* 手機／平板：「簡約有型」區塊文字壓在大樓照片上看不清楚，這裡改成接近純色的淺底（下方本來就另有一張外觀圖）。
+   寬度 > 1100px 的電腦版不受影響，仍直接顯示 bg09 原圖 */
+@media (max-width:1100px){
+  .architecture > .architecture-wash{background:#f4f8fb !important;}
+  .architecture{min-height:0 !important;} /* 原本最小高度 1080px，內容不到時會在圖片下方留一大片空白 */
+}
+
+/* 「本人已悉知」與「個人資料保護政策暨隱私權聲明」：同一行、同字級、垂直置中對齊
+   （原本 label 被通用表單規則撐成 18px 並帶下方間距，造成比連結高） */
+.privacy-consent{align-items:center}
+.privacy-consent label,
+.privacy-consent .privacy-link{
+  margin:0 !important;padding:0 !important;
+  display:inline-flex !important;align-items:center;
+  height:22px;font-size:inherit !important;line-height:22px !important;
+}
+
+/* ===== 私密花園輪播：照片比例 =====
+   照片是 1440×968（約 3:2）。外框原本是 700:520（約 4:3），用 contain 就會在上下露出白邊。
+   現在外框比例改成跟照片一樣，並用 cover：照片剛好填滿；
+   之後換成別的比例的照片，也不會有白邊，只是上下或左右會被裁掉一點。
+   要改比例：改下面兩個 aspect-ratio 的數字（寬/高）；要完整顯示不裁切：把 cover 改成 contain */
+.life-carousel__viewport,
+.life-carousel .carousel__viewport{aspect-ratio:1440/968;background:transparent}
+.life-carousel__image{object-fit:cover;background:transparent}
+
+/* 輪播照片右下角圖說「3D示意透視圖」：半透明黑底白字，淺色照片上也看得清楚。
+   位置在 right / bottom；字大小在 font-size；要更淡或更深改 rgba 最後的數字 */
+.life-carousel__viewport{position:relative}
+.life-carousel__caption{
+  position:absolute;right:12px;bottom:12px;z-index:3;
+  padding:5px 12px;
+  background:rgba(20,30,36,.58);color:#fff;
+  font:500 13px/1.4 var(--serif);letter-spacing:.06em;
+  pointer-events:none;
+}
+@media (max-width:700px){
+  .life-carousel__caption{right:8px;bottom:8px;padding:4px 9px;font-size:11px}
+}
+
+/* ===== 首頁 Logo 圖片（取代原本的「柏德序日」文字）=====
+   大小照你給的參考圖：logo 寬度約等於標題「向美好未來　致敬」文字寬度的 1.13 倍。
+   所以 logo 會跟著標題一起隨螢幕寬度縮放（電腦 1440px 約 430px、1920px 約 540px）。
+   要整體放大縮小：改下面的 9.3（越大 logo 越大）；手機版另外用固定寬度 170px */
+.brand-mark img{display:block;width:calc(clamp(38px,3.2vw,58px) * 9.3);max-width:100%;height:auto}
+@media (max-width:700px){
+  .brand-mark img{width:170px}
+}
+
+/* ===== 聯絡我們：「2–3 房／日式精工宅／客運園區核心　園科大道首排」照首頁的排法 =====
+   字級、間距沿用首頁 .hero__meta；這裡只補下方間距與小字行高 */
+.reserve-meta{margin:0 0 22px}
+.reserve-meta span{line-height:1.7}
+
 /* ===== 測試：拿掉各區塊的背景遮罩，直接顯示 bg01~bg12 原圖 =====
    要還原：刪掉從這一行到檔案結尾的整段即可
    （40 米園道 .park-overlay 已還原成原始設定：105deg 黑色 60% → 透明，不在下面名單內）===== */
@@ -1031,11 +1103,4 @@ p{
 .architecture-wash,
 .reserve-overlay {
   background: transparent !important;
-}
-
-/* 手機／平板：「簡約有型」區塊文字壓在大樓照片上看不清楚，這裡改成接近純色的淺底（下方本來就另有一張外觀圖）。
-   寬度 > 1100px 的電腦版不受影響，仍直接顯示 bg09 原圖 */
-@media (max-width:1100px){
-  .architecture-wash{background:#f4f8fb !important;}
-  .architecture{min-height:0 !important;} /* 原本最小高度 1080px，內容不到時會在圖片下方留一大片空白 */
 }

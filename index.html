@@ -39,7 +39,7 @@
       </div>
       <div class="container hero__inner">
         <div class="hero__copy">
-          <div class="brand-mark">柏德序日</div>
+          <div class="brand-mark"><img src="assets/logo.png" alt="柏德序日" width="458" height="207"></div>
           <h1>向美好未來　致敬</h1>
           <p class="hero__sub">遇見 幸福美好　·　看見 璀璨未來</p>
           <div class="hero__meta">
@@ -445,6 +445,8 @@
             aria-label="上一張">‹</button>
           <div class="carousel__viewport life-carousel__viewport">
             <img class="carousel__image life-carousel__image" alt="" />
+            <!-- 圖說（固定在照片右下角，每張照片都顯示）。要改文字就改這裡 -->
+            <span class="life-carousel__caption">3D示意透視圖</span>
           </div>
           <button class="carousel__arrow carousel__arrow--next" type="button" data-action="next"
             aria-label="下一張">›</button>
@@ -460,8 +462,14 @@
           <p class="eyebrow">RESERVE YOUR FUTURE</p>
           <h2>卡位下一個青埔<br>進駐國門都會生活圈</h2>
           <img src="assets/logo.png" alt="柏德序日">
-          <p>客運園區核心&nbsp;&nbsp;&nbsp;園科大道首排</p>
-          <a class="tel" href="tel:033862288">03-3862288</a>
+          <!-- 跟首頁同樣的排法：左邊大字「2–3 房」，右邊小字說明（共用首頁的 .hero__meta 樣式） -->
+          <div class="hero__meta reserve-meta">
+            <strong>2–3 房</strong>
+            <span>日式精工宅<br>客運園區核心　園科大道首排</span>
+          </div>
+          <p>建案地址：桃園大園區｜園科路X大觀路｜40米綠園道首排</p>
+          <p>建照號碼：(114)桃市都建執照字第會園00818號</p>
+          <a class="tel" href="tel:033862288">03-386-2288</a>
         </div>
 
         <form class="reserve-form contact-form" id="contactForm" name="sentMessage" novalidate>
@@ -498,8 +506,9 @@
           </div>
 
           <div class="privacy-consent">
+            <!-- 不用 required：由 app.js 檢查並顯示提示，瀏覽器原生提示在勾選框被擋住時不會出現 -->
             <input type="checkbox" id="privacyConsent" name="privacyConsent" value="yes"
-              data-validation-required-message="請確認個資事項" required>
+              data-validation-required-message="請確認個資事項" aria-required="true">
             <label for="privacyConsent">本人已悉知</label>
             <button class="privacy-link" type="button" data-open-privacy>個人資料保護政策暨隱私權聲明</button>
           </div>
@@ -510,7 +519,7 @@
       </div>
 
       <footer class="container footer"><span>柏德 × 偉宸 開發建設</span><span>SEE THE FUTURE. FEEL HAPPINESS.</span></footer>
-      <p class="container legal">※ 本頁圖片、影片及文字僅為示意，實際以現場及合約為準。【待填：建案地址／建照字號／廣告企劃】</p>
+      <!-- <p class="container legal">※ 本頁圖片、影片及文字僅為示意，實際以現場及合約為準。【待填：建案地址／建照字號／廣告企劃】</p> -->
     </section>
   </main>
 
